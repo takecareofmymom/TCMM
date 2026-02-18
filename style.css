@@ -1,0 +1,214 @@
+:root {
+    --primary-color: #6D5BFF; 
+    --secondary-color: #E0E0E0;
+    --text-color: #212529;
+    --background-color: #F9F7FD;
+    --card-background: #FFFFFF;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --body-font: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    font-family: var(--body-font);
+    background: radial-gradient(circle at top left, #F9F7FD 0%, #E6E0FF 100%);
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--card-background);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px var(--shadow-color);
+    padding: 36px;
+    box-sizing: border-box;
+}
+
+.step { display: block; }
+
+/* Typography */
+.main-copy {
+    text-align: center;
+    margin: 20px 0 40px;
+}
+
+.main-line {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.2;
+    display: block;
+    color: var(--text-color);
+}
+
+.sub-copy {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    color: #6c757d;
+    margin: 0 0 32px;
+}
+
+.step-title {
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 24px;
+}
+
+/* Card Selection (Step 1) */
+.card-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.card {
+    background-color: var(--card-background);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #eee;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px var(--shadow-color);
+}
+
+.card h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.card p {
+    font-size: 14px;
+    color: #6c757d;
+    margin: 0;
+}
+
+/* Filter Options (Step 2) */
+#filters { 
+    margin: 32px 0; 
+}
+
+.filter-category {
+    margin-bottom: 24px;
+}
+
+.filter-category-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.filter-options-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-option {
+    background-color: var(--card-background);
+    border: 1px solid #ddd;
+    color: #6c757d;
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease-in-out;
+}
+
+.filter-option.selected {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Form Inputs (Step 3) */
+.form-group { margin-bottom: 24px; }
+.form-group label { display: block; margin-bottom: 10px; font-weight: 500; font-size: 16px; }
+.form-group input[type="text"], .form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.form-group input[type="range"] { width: 100%; }
+#budget-value { text-align: center; display: block; margin-top: 8px; font-weight: 500; font-size: 16px; }
+
+/* Error Messages */
+.error-message {
+    color: #D32F2F; /* A Material Design red */
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 15px;
+    text-align: center;
+    min-height: 1.2em; /* Reserve space to avoid layout shifts */
+}
+
+.form-group .error-message {
+    text-align: left;
+    margin-top: 8px;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.next-btn, .back-btn, .restart-btn {
+    flex: 1;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.next-btn, .restart-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.back-btn {
+    background-color: #F0F0F0;
+    color: var(--text-color);
+}
+
+.next-btn:hover, .restart-btn:hover { background-color: #5848d8; }
+.back-btn:hover { background-color: #E0E0E0; }
+
+/* Result Page (Step 4) */
+.match-copy { font-size: 22px; text-align: center; color: var(--text-color); margin-bottom: 24px; line-height: 1.5;}
+.result-container { display: flex; flex-direction: column; gap: 20px; }
+.result-card { background: white; border: 1px solid #eee; border-radius: 16px; overflow: hidden; }
+.result-card img { width: 100%; height: 150px; object-fit: cover; }
+.result-card-info { padding: 20px; }
+.result-card-info h3 { margin: 0 0 10px; font-size: 20px; }
+.result-card-info p { margin: 0 0 12px; color: #6c757d; line-height: 1.6; }
+.result-card-actions { display: flex; gap: 10px; margin-top: 16px; }
+.result-card-actions button { background: #f0f0f0; border: none; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; }
+
+/* Hide unnecessary elements */
+.hero-images { display: none; }

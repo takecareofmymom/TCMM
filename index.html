@@ -1,13 +1,90 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>myapp</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엄마를 부탁해</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PNT6HBJBQ7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-PNT6HBJBQ7');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "vj82m070nw");
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Step 1: Intro -->
+        <div id="step1" class="step">
+            <h1 class="main-copy">
+                <span class="main-line">엄마를 부탁해</span>
+            </h1>
+            <p class="sub-copy">어떤 돌봄이 필요하신가요?</p>
+            <div class="card-container">
+                <div class="card" data-service="hospital"><h3>요양병원</h3><p>전문의의 치료와 재활</p></div>
+                <div class="card" data-service="nursing-home"><h3>요양원</h3><p>집처럼 편안한 생활</p></div>
+                <div class="card" data-service="visiting-care"><h3>방문요양</h3><p>익숙한 집에서 받는 돌봄</p></div>
+                <div class="card" data-service="day-care"><h3>주야간보호</h3><p>즐거운 낮 시간 활동</p></div>
+            </div>
+        </div>
+
+        <!-- Step 2: Custom Filter -->
+        <div id="step2" class="step" style="display: none;">
+            <h2 class="step-title">가장 중요하게 생각하는<br>가치를 선택해주세요.</h2>
+            <div id="filters"></div>
+            <p class="error-message" id="step2-error"></p>
+            <div class="button-group">
+                <button class="back-btn">이전</button>
+                <button class="next-btn">다음</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Common Items -->
+        <div id="step3" class="step" style="display: none;">
+            <h2 class="step-title">현실적인 조건을 설정해주세요.</h2>
+            <div class="form-group">
+                <label for="location">어디와 가까운 곳을 찾으시나요?</label>
+                <input type="text" id="location" placeholder="예: 서울시 강남구">
+                <p class="error-message" id="location-error"></p>
+            </div>
+            <div class="form-group">
+                <label for="budget">월 예상 비용은 어느 정도 생각하시나요?</label>
+                <input type="range" id="budget" min="500000" max="5000000" step="100000" value="2750000">
+                <span id="budget-value">2,750,000원</span>
+            </div>
+            <div class="form-group">
+                 <label for="special-needs">특별히 고려해야 할 생활 습관이 있으신가요?</label>
+                <input type="text" id="special-needs" placeholder="예: 기독교, 당뇨식">
+                <p class="error-message" id="special-needs-error"></p>
+            </div>
+            <div class="button-group">
+                <button class="back-btn">이전</button>
+                <button class="next-btn">결과 보기</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Result -->
+        <div id="step4" class="step" style="display: none;">
+            <h1 class="match-copy"></h1>
+            <div class="result-container"></div>
+            <div class="button-group">
+                <button class="restart-btn">처음으로</button>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
 </html>
