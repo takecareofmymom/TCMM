@@ -1,7 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
 
-const filterOptions = {
+// --- Type Definitions for TypeScript ---
+type Service = 'hospital' | 'nursing-home' | 'visiting-care' | 'day-care';
+
+type FilterCategory = {
+  [category: string]: string[];
+};
+
+type FilterOptions = {
+  [key in Service]: FilterCategory;
+};
+
+type MockResult = {
+  name: string;
+  image: string;
+  matchPoint: string;
+  review: string;
+};
+
+type MockResults = {
+  [key in Service]: MockResult[];
+};
+
+type Errors = {
+  step2?: string;
+  location?: string;
+  specialNeeds?: string;
+};
+
+
+// --- Data Constants ---
+const filterOptions: FilterOptions = {
     hospital: {
         '의료 서비스': ['집중 재활치료 (뇌졸중, 파킨슨 등)', '인공 신장 투석', '호스피스 완화의료', '암 요양 전문', '대학병원 신속 협진'],
         '진료 과목': ['재활의학과 전문의 상주', '신경과 전문의 상주', '가정의학과 전문의 상주'],
@@ -24,7 +54,7 @@ const filterOptions = {
     }
 };
 
-const mockResults = {
+const mockResults: MockResults = {
     hospital: [{ name: '서울 재활 전문 요양병원', image: 'https://via.placeholder.com/300x200', matchPoint: '뇌졸중, 척추 손상 등 중증 질환에 대한 집중 재활 프로그램이 강점입니다.', review: '전문적인 재활 치료 덕분에 상태가 많이 호전되셨어요.' }, { name: '강남 시니어스 요양병원', image: 'https://via.placeholder.com/300x200', matchPoint: '대학병원 출신 전문의가 상주하며, 인공투석실을 운영하고 있습니다.', review: '투석 때문에 걱정이 많았는데, 여기서 편하게 받고 계십니다.' }, { name: '햇살 가득 요양병원', image: 'https://via.placeholder.com/300x200', matchPoint: '호스피스 완화의료 병동을 별도로 운영하여, 존엄하고 편안한 마무리를 돕습니다.', review: '마지막 가시는 길, 따뜻하게 보살펴주셔서 감사합니다.' }],
     'nursing-home': [{ name: '행복한 우리집 요양원', image: 'https://via.placeholder.com/300x200', matchPoint: '보건복지부 A등급 인증, 치매 전담실을 운영하여 전문적인 케어가 가능합니다.', review: '치매가 있으신데도 잘 돌봐주셔서 마음이 놓여요.' }, { name: '도심 속 자연 요양원', image: 'https://via.placeholder.com/300x200', matchPoint: '넓은 정원과 텃밭이 있어 어르신들이 소일거리를 하며 정서적 안정을 찾을 수 있습니다.', review: '답답한 걸 싫어하시는데, 정원이 넓어서 좋아하세요.' }, { name: '늘푸른 실버타운', image: 'https://via.placeholder.com/300x200', matchPoint: '전 세대 1인실 및 2인실로 구성되어 프라이빗한 생활을 보장합니다.', review: '독립적인 공간을 원하셨는데, 1인실이 있어 만족해하십니다.' }],
     'visiting-care': [{ name: '엄마를부탁해 케어(강남)', image: 'https://via.placeholder.com/300x200', matchPoint: '치매 전문 교육을 이수한 10년차 요양보호사가 배정됩니다.', review: '인지능력이 걱정이었는데, 전문 보호사님 덕분에 많이 좋아지셨어요.' }, { name: '따스한 손길 방문요양센터', image: 'https://via.placeholder.com/300x200', matchPoint: '주말, 야간 등 긴급 돌봄 필요시 24시간 대응팀을 운영합니다.', review: '갑자기 일이 생겨도 안심하고 맡길 수 있어서 정말 좋아요.' }, { name: '우리동네 효자손', image: 'https://via.placeholder.com/300x200', matchPoint: '어르신 성향과 필요에 맞춰 남성 또는 여성 보호사 선택이 가능합니다.', review: '아버지께서 남자 보호사님을 더 편하게 생각하셔서 만족스러워요.' }],
@@ -32,22 +62,22 @@ const mockResults = {
 };
 
 function App() {
-    const [step, setStep] = useState(1);
-    const [selectedService, setSelectedService] = useState('');
-    const [selectedFilters, setSelectedFilters] = useState([]);
-    const [location, setLocation] = useState('');
-    const [budget, setBudget] = useState(2750000);
-    const [specialNeeds, setSpecialNeeds] = useState('');
-    const [errors, setErrors] = useState({ step2: '', location: '', specialNeeds: '' });
+    const [step, setStep] = useState<number>(1);
+    const [selectedService, setSelectedService] = useState<Service | '' >('');
+    const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+    const [location, setLocation] = useState<string>('');
+    const [budget, setBudget] = useState<number>(2750000);
+    const [specialNeeds, setSpecialNeeds] = useState<string>('');
+    const [errors, setErrors] = useState<Errors>({});
 
-    const handleCardClick = (service) => {
+    const handleCardClick = (service: Service) => {
         setSelectedService(service);
         setSelectedFilters([]);
         setErrors({});
         setStep(2);
     };
 
-    const handleFilterClick = (filter) => {
+    const handleFilterClick = (filter: string) => {
         setSelectedFilters(prev => 
             prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
         );
@@ -55,7 +85,7 @@ function App() {
 
     const handleNextStep2 = () => {
         if (selectedFilters.length === 0) {
-            setErrors({ ...errors, step2: '가장 중요하게 생각하는 가치를 1개 이상 선택해주세요.' });
+            setErrors({ step2: '가장 중요하게 생각하는 가치를 1개 이상 선택해주세요.' });
         } else {
             setErrors({});
             setStep(3);
@@ -63,7 +93,7 @@ function App() {
     };
 
     const handleNextStep3 = () => {
-        let newErrors = {};
+        const newErrors: Errors = {};
         if (!location) newErrors.location = '어디와 가까운 곳을 찾으시나요?';
         if (!specialNeeds) newErrors.specialNeeds = '특별히 고려해야 할 생활 습관이 있으신가요?';
         
@@ -86,8 +116,8 @@ function App() {
     };
 
     const renderFilters = () => {
+        if (!selectedService) return null;
         const serviceCategories = filterOptions[selectedService];
-        if (!serviceCategories) return null;
 
         return Object.entries(serviceCategories).map(([category, options]) => (
             <div key={category} className="filter-category">
@@ -108,7 +138,8 @@ function App() {
     };
 
     const renderResults = () => {
-        const resultsForService = mockResults[selectedService] || [];
+        if (!selectedService) return null;
+        const resultsForService = mockResults[selectedService];
         const userName = "어머님";
         const matchPercentage = 90 + Math.floor(Math.random() * 9);
         let dynamicMatchPoint = selectedFilters.length > 0 ? `특히 중요하게 생각하신 '${selectedFilters.join(', ')}' 조건에 잘 맞아요.` : "";
